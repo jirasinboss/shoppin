@@ -4,15 +4,47 @@ const prisma = new PrismaClient();
 
 const password = bcrypt.hashSync('123456');
 const userData = [
-  { role: 'USER', firstName: 'Andy', lastName: 'Smith', phoneNumber: '0970687203', gender: 'MALE', email: 'andy@ggg.mail', password },
-  { role: 'USER', firstName: 'Bobby', lastName: 'Johnson', phoneNumber: '0649129673', gender: 'MALE', email: 'bobby@ggg.mail', password },
-  { role: 'USER', firstName: 'Candy',  lastName: 'Williams', phoneNumber: '0611214879', gender: 'FEMALE', email: 'candy@ggg.mail', password },
+  {
+    username: 'boss',
+    password: password,
+    email: 'jirasinj@gmail.com',
+    firstName: 'jirasin',
+    lastName: 'wiset',
+    address: '156/10',
+    phone: 654743544,
+  },
+  {
+    username: 'pee',
+    password: password,
+    email: 'preera@gmail.com',
+    firstName: 'preera',
+    lastName: 'joo',
+    address: '156/10',
+    phone: 896546315,
+  },
+];
+
+const todoData = [
+  { title: 'Learn HTML', dueDate: new Date(), userId: 1 },
+  { title: 'Learn CSS', dueDate: new Date(), userId: 1 },
+  { title: 'Learn JS', dueDate: new Date(), userId: 2 },
+  { title: 'Learn React', dueDate: new Date(), userId: 2 },
 ];
 
 const run = async () => {
-  await prisma.user.createMany({
-    data : userData
-  })
-}
+  try {
+    await prisma.user.createMany({
+      data: userData,
+    });
+    await prisma.todo.createMany({
+      data: todoData,
+    });
+    console.log('Seeding completed successfully.');
+  } catch (error) {
+    console.error('Error during seeding:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+};
 
-run()
+run();

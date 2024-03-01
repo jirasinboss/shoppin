@@ -23,10 +23,13 @@ enum RefundType {
 model User {
   id                Int               @id @default(autoincrement())
   role              Role              @default(USER)
+  firstName         String  @map("first_name")
+  lastName          String  @map("last_name")
   username          String?
   email             String            @unique
   phone             String?
   password          String
+  address           String
   refund            RefundType?
   Order             Order[]
   Card              Card[]
